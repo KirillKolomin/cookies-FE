@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {CookieActions} from './enums/cookie-actions';
+import {HttpCookieClientService} from './services/http-cookie-client.service';
+import {tap} from 'rxjs/operators';
 
-enum CookieActions {
-  delete = 'delete',
-  get = 'get',
-  set = 'set'
-}
 
 @Component({
   selector: 'app-root',
@@ -17,18 +15,22 @@ export class AppComponent implements OnInit {
 
   cookieActionOptions = Object.keys(CookieActions);
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public readonly formBuilder: FormBuilder, public readonly httpCookieClient: HttpCookieClientService) {
   }
 
   ngOnInit(): void {
     this.cookiesFormGroup = this.formBuilder.group({
-      action: [CookieActions.set],
+      action: [CookieActions.Set],
       name: [''],
       value: ['']
     });
   }
 
   onSubmit(): void {
-    console.log(this.cookiesFormGroup);
+    this.httpCookieClient.postCookie(this.cookiesFormGroup.value)
+      .pipe(tap((data) => {
+        console.log(data);
+      }))
+      .subscribe();
   }
 }
