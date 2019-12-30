@@ -33,5 +33,29 @@
     <input formControlName="value" matInput placeholder="cookie's value">
   </mat-form-field>
 
+  <div [formGroup]="optionsFormGroup">
+    <mat-form-field>
+      <input formControlName="maxAge" matInput placeholder="Max age" type="number">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="signed">Is signed</mat-checkbox>
+
+    <mat-form-field>
+      <input formControlName="expires" matInput placeholder="Expires time">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="httpOnly">HTTP only</mat-checkbox>
+
+    <mat-form-field>
+      <input formControlName="path" matInput placeholder="Path">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input formControlName="domain" matInput placeholder="Domain">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="secure">Is secure</mat-checkbox>
+  </div>
+
   <button color="accent" mat-raised-button>Send</button>
 </form>
